@@ -6,18 +6,17 @@ pipeline {
 
         def mvntest = 'mvn test'
         def mvnpackage = 'mvn clean install'
-       // def mavenpom = readMavenPom file: 'pom.xml'
+       def mavenpom = readMavenPom file: 'pom.xml'
 
         def sonar_cred = 'sonar'
         def code_analysis = 'mvn clean package sonar:sonar'
-/*
+
         def nex_cred = 'nexus'
         def grp_ID = 'com.example'
         def nex_url = '172.31.28.226:8081'
         def nex_ver = 'nexus3'
         def proto = 'http'
-        def repo = 'demoproject'
-*/        
+        def repo = 'demoproject'      
     }
     stages{
         stage('Git Checkout'){
@@ -64,12 +63,11 @@ pipeline {
         stage('Upload Artifact to nexus repository') {
             steps {
                 script {
-                    def mavenpom = readMavenPom file: 'pom.xml'
                     nexusArtifactUploader artifacts: [
                     [
                         artifactId: 'springboot',
                         classifier: '',
-                        file: "target/springboot-${mavenpom.version}.jar",
+                        file: "target/springboot-${env.mavenpom.version}.jar",
                         type: 'jar'
                     ]
                 ],
