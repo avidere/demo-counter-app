@@ -60,10 +60,9 @@ pipeline{
             }
         stage('Upload Artifact to nexus repository'){
             steps{
-                
-                   Def mavenpom=readMavenPom 'pom.xml' 
                
                 script{
+                    def mavenpom=readMavenPom 'pom.xml'
                 nexusArtifactUploader artifacts: [
                     [
                         artifactId: 'springboot', 
