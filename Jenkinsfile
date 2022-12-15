@@ -77,7 +77,7 @@ pipeline {
                     nexusVersion: 'nexus3',
                     protocol: 'http',
                     repository: 'demoproject',
-                    version: "${mavenpom.version}"
+                    version: "${env.mavenpom.version}"
                     echo "Artifact uploaded to nexus repository"
 
         /*def nex_cred = 'nexus'
