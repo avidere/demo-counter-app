@@ -69,11 +69,12 @@ pipeline {
                     def nex_ver = 'nexus3'
                     def proto = 'http'
                     def repo = 'demoproject'
+
                     nexusArtifactUploader artifacts: [
                     [
                         artifactId: 'springboot',
                         classifier: '',
-                        file: "target/springboot-""${mavenpom.version}"".jar",
+                        file: "target/springboot-${mavenpom.version}.jar",
                         type: 'jar'
                     ]
                 ],
