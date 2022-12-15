@@ -15,7 +15,7 @@ pipeline {
         def nex_url = '172.31.28.226:8081'
         def nex_ver = 'nexus3'
         def proto = 'http'
-        def repo = 'demoproject'      
+        def repo = 'demoproject'
     }
     stages{
         stage('Git Checkout'){
@@ -32,8 +32,18 @@ pipeline {
                     sh "${env.mvntest}"
                     echo "Unit Testing Completed"
                 }
+                post {
+                    always {
+                        junit allowEmptyResults: true,
+                        keepLongStdio: true,
+                        skipMarkingBuildUnstable: true,
+                        skipOldReports: true,
+                        skipPublishingChecks: true,
+                        testResults: '/target/surefire-reports/**/*.xml'
+                    }
+                }
             }
-        } 
+        }
         stage('Maven Build'){
             steps{
                 sh "${env.mvnpackage}"
