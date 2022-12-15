@@ -1,30 +1,32 @@
 pipeline {
     agent any
-    envirionment {
+    environment {
+        def git_branch = 'main'
+        def git_url = 'https://github.com/avidere/demo-counter-app.git'
 
+        def mvntest = 'mvn test'
+        def mvnpackage = 'mvn clean install'
     }
-    stages {
-        stage('Git Checkout') {
-            steps{
-                script{}
-                    git branch: 'main', url: 'https://github.com/avidere/demo-counter-app.git'
-            }
-        }
-    }
-        stage('UNIT testing') {
+    stages{
+        stage{
             steps{
                 script{
-                    sh 'mvn test'
+                    git branch: "${git_branch}", url: "${git_url}"
                 }
             }
         }
-        stage('Maven build') {
+        stage{
             steps{
                 script{
-                    sh 'mvn clean install'
+                    sh "${env.mvntest}"
                 }
             }
-        }
+        } 
+        stage{
+            steps{
+                sh "${env.mvnpackage}"
+            }
+        } 
         stage('Static code analysis') {
             steps{
                 script{
@@ -35,18 +37,18 @@ pipeline {
 
             }
         }
-            stage('Quality Gate Status') {
+        stage('Quality Gate Status') {
                 steps{
                     script{
                         waitForQualityGate abortPipeline: true, credentialsId: 'sonar'
                     }
                 }
-            }
+        }
         stage('Upload Artifact to nexus repository') {
             steps {
                 script{
-                def mavenpom = readMavenPom file: 'pom.xml'
-                nexusArtifactUploader artifacts: [
+                    def mavenpom = readMavenPom file: 'pom.xml'
+                    nexusArtifactUploader artifacts: [
                     [
                         artifactId: 'springboot',
                         classifier: '',
@@ -63,6 +65,6 @@ pipeline {
                     version: "${mavenpom.version}"
                 }
             }
-        }
+        } 
+    }
 }
- 
