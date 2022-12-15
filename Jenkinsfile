@@ -6,6 +6,7 @@ pipeline {
 
         def mvntest = 'mvn test'
         def mvnpackage = 'mvn clean install'
+       
 
         def sonar_cred = 'sonar'
         def code_analysis = 'mvn clean package sonar:sonar'
@@ -15,14 +16,14 @@ pipeline {
         def nex_url = '172.31.28.226:8081'
         def nex_ver = 'nexus3'
         def proto = 'http'
-        def repo = 'demoproject'
+        def repo = 'demoproject'      
     }
     stages{
         stage('Git Checkout'){
             steps{
                 script{
                     git branch: "${git_branch}", url: "${git_url}"
-                    echo 'Git Checkout Completed'
+                    echo "Git Checkout Completed"
                 }
             }
         }
@@ -30,14 +31,14 @@ pipeline {
             steps{
                 script{
                     sh "${env.mvntest}"
-                    echo 'Unit Testing Completed'
+                    echo "Unit Testing Completed"
                 }
             }
         } 
         stage('Maven Build'){
             steps{
                 sh "${env.mvnpackage}"
-                echo 'Maven Build Completed'
+                echo "Maven Build Completed"
             }
         } 
         stage('Static code analysis') {
@@ -45,7 +46,7 @@ pipeline {
                 script{
                     withSonarQubeEnv(credentialsId: "${sonar_cred}") {
                         sh "${code_analysis}"
-                        echo'Static Code Analysis'
+                        echo"Static Code Analysis"
                     }
                 }
 
@@ -55,7 +56,7 @@ pipeline {
                 steps{
                     script{
                         waitForQualityGate abortPipeline: true, credentialsId: "${sonar_cred}"
-                        echo 'Quality Gate status Completed'
+                        echo "Quality Gate status Completed"
                     }
                 }
         }
@@ -71,14 +72,14 @@ pipeline {
                         type: 'jar'
                     ]
                 ],
-                    credentialsId: "${nex_cred}",
-                    groupId: "${grp_ID}",
-                    nexusUrl: "${nex_url}",
-                    nexusVersion: "${nex_ver}",
-                    protocol: "${proto}",
-                    repository: "${repo}",
+                    credentialsId: 'nexus',
+                    groupId: 'com.example',
+                    nexusUrl: '172.31.28.226:8081',
+                    nexusVersion: 'nexus3',
+                    protocol: 'http',
+                    repository: 'demoproject',
                     version: "${mavenpom.version}"
-                    echo 'Artifact uploaded to nexus repository'
+                    echo "Artifact uploaded to nexus repository"
 
         /*def nex_cred = 'nexus'
         def grp_ID = 'com.example'
