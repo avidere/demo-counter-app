@@ -2,6 +2,10 @@ pipeline{
     
     agent any 
     
+    environment{
+    sonar=credentialsId: 'sonar'
+    }
+    
     stages {
         
         stage('Git Checkout'){
@@ -41,7 +45,7 @@ pipeline{
                 
                 script{
                     
-                    withSonarQubeEnv(credentialsId: 'sonar') {
+                    withSonarQubeEnv(${sonar}) {
                         
                         sh 'mvn clean package sonar:sonar'
                     }
