@@ -1,86 +1,68 @@
-pipeline{
-    
-    agent any 
+pipeline {
+    agent any
+    envirionment {
+
+    }
     stages {
-        
-        stage('Git Checkout'){
-            
+        stage('Git Checkout') {
             steps{
-                
-                script{
-                    
+                script{}
                     git branch: 'main', url: 'https://github.com/avidere/demo-counter-app.git'
-                }
             }
         }
-        stage('UNIT testing'){
-            
+    }
+        stage('UNIT testing') {
             steps{
-                
                 script{
-                    
                     sh 'mvn test'
                 }
             }
         }
-        
-        stage('Maven build'){
-            
+        stage('Maven build') {
             steps{
-                
                 script{
-                    
                     sh 'mvn clean install'
                 }
             }
         }
-        stage('Static code analysis'){
-            
+        stage('Static code analysis') {
             steps{
-                
                 script{
-                    
                     withSonarQubeEnv(credentialsId: 'sonar') {
-                        
                         sh 'mvn clean package sonar:sonar'
                     }
-                   }
-                    
                 }
+
             }
-            stage('Quality Gate Status'){
-                
+        }
+            stage('Quality Gate Status') {
                 steps{
-                    
                     script{
-                        
                         waitForQualityGate abortPipeline: true, credentialsId: 'sonar'
                     }
                 }
             }
-        stage('Upload Artifact to nexus repository'){
-            steps{
-               
+        stage('Upload Artifact to nexus repository') {
+            steps {
                 script{
-                    def mavenpom = readMavenPom file: 'pom.xml'
+                def mavenpom = readMavenPom file: 'pom.xml'
                 nexusArtifactUploader artifacts: [
                     [
-                        artifactId: 'springboot', 
-                        classifier: '', 
-                        file: "target/springboot-${mavenpom.version}.jar", 
+                        artifactId: 'springboot',
+                        classifier: '',
+                        file: "target/springboot-${mavenpom.version}.jar",
                         type: 'jar'
                     ]
-                ], 
-                    credentialsId: 'nexus', 
-                    groupId: 'com.example', 
-                    nexusUrl: '172.31.28.226:8081', 
-                    nexusVersion: 'nexus3', 
-                    protocol: 'http', 
-                    repository: 'demoproject', 
+                ],
+                    credentialsId: 'nexus',
+                    groupId: 'com.example',
+                    nexusUrl: '172.31.28.226:8081',
+                    nexusVersion: 'nexus3',
+                    protocol: 'http',
+                    repository: 'demoproject',
                     version: "${mavenpom.version}"
                 }
             }
-          }
         }
-        
 }
+ 
