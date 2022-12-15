@@ -74,7 +74,7 @@ pipeline{
                     nexusUrl: '172.31.28.226:8081', 
                     nexusVersion: 'nexus3', 
                     protocol: 'http', 
-                    repository: 'http://35.77.111.149:8081/repository/demoproject/', 
+                    repository: 'http://35.77.33.50:8081/repository/demoproject/', 
                     version: '1.0.0'
                 }
             }
