@@ -26,26 +26,20 @@ pipeline {
                 }
             }
         }
-         stage('Maven Build'){
-            steps{
-                sh "${env.mvnpackage}"
-                echo "Maven Build Completed"
-            }
-         }
         stage('Unit Testing'){
             steps{
                 script{
                     sh "${env.mvntest}"
                     echo "Unit Testing Completed"
                 }
-                post {
-                    always {
-                        junit '/target/surefire-reports/**/*.xml'
-                    }
-                }
             }
-        }
-       /*
+        } 
+        stage('Maven Build'){
+            steps{
+                sh "${env.mvnpackage}"
+                echo "Maven Build Completed"
+            }
+        }/*
         stage('Static code analysis') {
             steps{
                 script{
