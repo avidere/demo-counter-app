@@ -6,6 +6,18 @@ pipeline {
 
         def mvntest = 'mvn test'
         def mvnpackage = 'mvn clean install'
+
+        def sonar_cred = 'sonar'
+        def code_analysis = 'mvn clean package sonar:sonar'
+
+        def mavenpom = readMavenPom file: 'pom.xml'
+
+        def nex_cred = 'nexus'
+        def grp_ID = 'com.example'
+        def nex_url = '172.31.28.226:8081'
+        def nex_ver = 'nexus3'
+        def proto = 'http'
+        def repo = 'demoproject'
     }
     stages{
         stage('Git Checkout'){
@@ -30,8 +42,8 @@ pipeline {
         stage('Static code analysis') {
             steps{
                 script{
-                    withSonarQubeEnv(credentialsId: 'sonar') {
-                        sh 'mvn clean package sonar:sonar'
+                    withSonarQubeEnv(credentialsId: "${sonar_cred}") {
+                        sh "${code_analysis}"
                     }
                 }
 
@@ -40,14 +52,13 @@ pipeline {
         stage('Quality Gate Status') {
                 steps{
                     script{
-                        waitForQualityGate abortPipeline: true, credentialsId: 'sonar'
+                        waitForQualityGate abortPipeline: true, credentialsId: "${sonar_cred}"
                     }
                 }
         }
         stage('Upload Artifact to nexus repository') {
             steps {
-                script{
-                    def mavenpom = readMavenPom file: 'pom.xml'
+                script {
                     nexusArtifactUploader artifacts: [
                     [
                         artifactId: 'springboot',
@@ -56,15 +67,16 @@ pipeline {
                         type: 'jar'
                     ]
                 ],
-                    credentialsId: 'nexus',
-                    groupId: 'com.example',
-                    nexusUrl: '172.31.28.226:8081',
-                    nexusVersion: 'nexus3',
-                    protocol: 'http',
-                    repository: 'demoproject',
+                    credentialsId: "${nexus_cred}",
+                    groupId: "${grp_ID}",
+                    nexusUrl: "${nex_url}",
+                    nexusVersion: "${nex_ver}",
+                    protocol: "${proto}",
+                    repository: "${repo}",
                     version: "${mavenpom.version}"
+
                 }
             }
-        } 
+        }
     }
 }
