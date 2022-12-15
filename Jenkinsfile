@@ -6,7 +6,7 @@ pipeline {
 
         def mvntest = 'mvn test'
         def mvnpackage = 'mvn clean install'
-       
+
         def sonar_cred = 'sonar'
         def code_analysis = 'mvn clean package sonar:sonar'
 
@@ -69,12 +69,14 @@ pipeline {
                     def nex_ver = 'nexus3'
                     def proto = 'http'
                     def repo = 'demoproject'
+                    def art_id = 'springboot'
+                    def art_type = 'jar'
                     nexusArtifactUploader artifacts: [
                     [
-                        artifactId: 'springboot',
+                        artifactId: "${art_id}"
                         classifier: '',
                         file: "target/springboot-${mavenpom.version}.jar",
-                        type: 'jar'
+                        type: "${art_type}"
                     ]
                 ],
                     credentialsId: "${nex_cred}",
