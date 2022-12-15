@@ -40,17 +40,12 @@ pipeline {
                 }
                 post {
                     always {
-                        junit allowEmptyResults: true, testResults: '/target/surefire-reports/**/*.xml'
+                       // junit allowEmptyResults: true, testResults: '/target/surefire-reports/**/*.xml'
                     }
                 }
             }
         }
-        stage('Maven post Build'){
-            steps{
-                sh "${env.mvnpackage}"
-                echo "Maven Build Completed"
-            }
-        }/*
+    /*
         stage('Static code analysis') {
             steps{
                 script{
