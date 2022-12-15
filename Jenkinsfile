@@ -9,6 +9,13 @@ pipeline {
 
         def sonar_cred = 'sonar'
         def code_analysis = 'mvn clean package sonar:sonar'
+
+        def nex_cred = 'nexus'
+        def grp_ID = 'com.example'
+        def nex_url = '172.31.28.226:8081'
+        def nex_ver = 'nexus3'
+        def proto = 'http'
+        def repo = 'demoproject'
     }
     stages{
         stage('Git Checkout') {
@@ -62,6 +69,8 @@ pipeline {
                     def nex_ver = 'nexus3'
                     def proto = 'http'
                     def repo = 'demoproject'
+                    def artifact_id = 'springboot'
+                    def art_type = 'jar'
                     nexusArtifactUploader artifacts: [
                     [
                         artifactId: 'springboot',
