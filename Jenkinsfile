@@ -69,6 +69,7 @@ pipeline {
                     def nex_ver = 'nexus3'
                     def proto = 'http'
                     def repo = 'demoproject'
+
                     nexusArtifactUploader artifacts: [
                     [
                         artifactId: 'springboot'
