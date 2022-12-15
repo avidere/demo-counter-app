@@ -6,7 +6,7 @@ pipeline {
 
         def mvntest = 'mvn test'
         def mvnpackage = 'mvn clean install'
-       
+
         def sonar_cred = 'sonar'
         def code_analysis = 'mvn clean package sonar:sonar'
 
@@ -26,20 +26,26 @@ pipeline {
                 }
             }
         }
+        stage('Maven Build'){
+            steps{
+                sh "${env.mvnpackage}"
+                echo "Maven Build Completed"
+            }
         stage('Unit Testing'){
             steps{
                 script{
                     sh "${env.mvntest}"
                     echo "Unit Testing Completed"
                 }
+                post {
+                    always {
+                            //archiveArtifacts artifacts: 'build/libs/**/*.jar', fingerprint: true
+                            junit 'build/reports/**/*.xml'
+                        }
+                    }
             }
         } 
-        stage('Maven Build'){
-            steps{
-                sh "${env.mvnpackage}"
-                echo "Maven Build Completed"
-            }
-        } 
+        }/*
         stage('Static code analysis') {
             steps{
                 script{
@@ -58,7 +64,7 @@ pipeline {
                         echo "Quality Gate status Completed"
                     }
                 }
-        }
+        }*/
     /*    stage('Upload Artifact to nexus repository') {
             steps {
                 script {
