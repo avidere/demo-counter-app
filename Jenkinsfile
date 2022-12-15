@@ -59,7 +59,7 @@ pipeline {
                     }
                 }
         }
-        stage('Upload Artifact to nexus repository') {
+    /*    stage('Upload Artifact to nexus repository') {
             steps {
                 script {
                     def mavenpom = readMavenPom file: 'pom.xml'
@@ -87,6 +87,6 @@ pipeline {
                     echo "Artifact uploaded to nexus repository"
                 }
             }
-        }
+        }*/
     }
 }
