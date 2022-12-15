@@ -58,6 +58,27 @@ pipeline{
                     }
                 }
             }
+        stage('Upload Artifact to nexus repository'){
+            steps{
+                script{
+                nexusArtifactUploader artifacts: [
+                    [
+                        artifactId: 'springboot', 
+                        classifier: '', 
+                        file: '/target/springboot-1.0.0.jar', 
+                        type: 'jar'
+                    ]
+                ], 
+                    credentialsId: 'nexus', 
+                    groupId: 'com.example', 
+                    nexusUrl: '172.31.28.226:8081', 
+                    nexusVersion: 'nexus3', 
+                    protocol: 'http', 
+                    repository: 'http://35.77.111.149:8081/repository/demoproject/', 
+                    version: '1.0.0'
+                }
+            }
+          }
         }
         
 }
