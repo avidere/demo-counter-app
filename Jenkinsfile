@@ -6,7 +6,7 @@ pipeline {
 
         def mvntest = 'mvn test'
         def mvnpackage = 'mvn clean install'
-
+       
         def sonar_cred = 'sonar'
         def code_analysis = 'mvn clean package sonar:sonar'
 
@@ -15,10 +15,10 @@ pipeline {
         def nex_url = '172.31.28.226:8081'
         def nex_ver = 'nexus3'
         def proto = 'http'
-        def repo = 'demoproject'
+        def repo = 'demoproject'      
     }
     stages{
-        stage('Git Checkout') {
+        stage('Git Checkout'){
             steps{
                 script{
                     git branch: "${git_branch}", url: "${git_url}"
@@ -26,7 +26,7 @@ pipeline {
                 }
             }
         }
-        stage('Unit Testing') {
+        stage('Unit Testing'){
             steps{
                 script{
                     sh "${env.mvntest}"
@@ -69,7 +69,6 @@ pipeline {
                     def nex_ver = 'nexus3'
                     def proto = 'http'
                     def repo = 'demoproject'
-
                     nexusArtifactUploader artifacts: [
                     [
                         artifactId: 'springboot',
