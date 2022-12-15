@@ -7,7 +7,6 @@ pipeline {
         def mvntest = 'mvn test'
         def mvnpackage = 'mvn clean install'
        
-
         def sonar_cred = 'sonar'
         def code_analysis = 'mvn clean package sonar:sonar'
 
