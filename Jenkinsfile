@@ -34,12 +34,7 @@ pipeline {
                 }
                 post {
                     always {
-                        junit allowEmptyResults: false,
-                        keepLongStdio: false,
-                        skipMarkingBuildUnstable: false,
-                        skipOldReports: false,
-                        skipPublishingChecks: false,
-                        testResults: '/target/surefire-reports/**/*.xml'
+                        junit allowEmptyResults: false, testResults: '/target/surefire-reports/**/*.xml'
                     }
                 }
             }
