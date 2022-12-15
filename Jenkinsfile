@@ -8,21 +8,21 @@ pipeline {
         def mvnpackage = 'mvn clean install'
     }
     stages{
-        stage{
+        stage('Git Checkout'){
             steps{
                 script{
                     git branch: "${git_branch}", url: "${git_url}"
                 }
             }
         }
-        stage{
+        stage('Unit Testing'){
             steps{
                 script{
                     sh "${env.mvntest}"
                 }
             }
         } 
-        stage{
+        stage(Maven Build){
             steps{
                 sh "${env.mvnpackage}"
             }
