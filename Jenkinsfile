@@ -26,26 +26,21 @@ pipeline {
                 }
             }
         }
-        stage('Maven Build'){
+         stage('Maven Build'){
             steps{
                 sh "${env.mvnpackage}"
                 echo "Maven Build Completed"
             }
+         }
         stage('Unit Testing'){
             steps{
                 script{
                     sh "${env.mvntest}"
                     echo "Unit Testing Completed"
                 }
-                post {
-                    always {
-                            //archiveArtifacts artifacts: 'build/libs/**/*.jar', fingerprint: true
-                            junit '/target/surefire-reports/**/*.xml'
-                        }
-                    }
             }
-        } 
-        }/*
+        }
+       /*
         stage('Static code analysis') {
             steps{
                 script{
