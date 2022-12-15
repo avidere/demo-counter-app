@@ -3,7 +3,7 @@ pipeline{
     agent any 
     
     environment{
-    sonar=credentialsId: 'sonar'
+    sonar=(credentialsId:'sonar')
     }
     
     stages {
