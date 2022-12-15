@@ -45,7 +45,7 @@ pipeline {
                 }
             }
         }
-        stage('Maven Build'){
+        stage('Maven post Build'){
             steps{
                 sh "${env.mvnpackage}"
                 echo "Maven Build Completed"
