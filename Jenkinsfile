@@ -10,13 +10,14 @@ pipeline {
 
         def sonar_cred = 'sonar'
         def code_analysis = 'mvn clean package sonar:sonar'
-
+/*
         def nex_cred = 'nexus'
         def grp_ID = 'com.example'
         def nex_url = '172.31.28.226:8081'
         def nex_ver = 'nexus3'
         def proto = 'http'
         def repo = 'demoproject'
+*/        
     }
     stages{
         stage('Git Checkout'){
@@ -71,15 +72,22 @@ pipeline {
                         type: 'jar'
                     ]
                 ],
-                    credentialsId: "${nexus_cred}",
-                    groupId: "${grp_ID}",
-                    nexusUrl: "${nex_url}",
-                    nexusVersion: "${nex_ver}",
-                    protocol: "${proto}",
-                    repository: "${repo}",
+                    credentialsId: 'nexus',
+                    groupId: 'com.example',
+                    nexusUrl: '172.31.28.226:8081',
+                    nexusVersion: 'nexus3',
+                    protocol: 'http',
+                    repository: 'demoproject',
                     version: "${mavenpom.version}"
                     echo "Artifact uploaded to nexus repository"
 
+        /*def nex_cred = 'nexus'
+        def grp_ID = 'com.example'
+        def nex_url = '172.31.28.226:8081'
+        def nex_ver = 'nexus3'
+        def proto = 'http'
+        def repo = 'demoproject'
+        */
                 }
             }
         }
