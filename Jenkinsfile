@@ -26,18 +26,18 @@ pipeline {
                 }
             }
         }
-        stage('Maven Build'){
-            steps{
-                sh "${env.mvnpackage}"
-                echo "Maven Build Completed"
-            }
-        }
         stage('Unit Testing'){
             steps{
                 script{
                     sh "${env.mvntest}"
                     echo "Unit Testing Completed"
                 }
+            }
+        }
+        stage('Maven Build'){
+            steps{
+                sh "${env.mvnpackage}"
+                echo "Maven Build Completed"
             }
         }
     /*
