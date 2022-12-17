@@ -16,6 +16,7 @@ pipeline {
         def nex_ver = 'nexus3'
         def proto = 'http'
         def repo = 'demoproject'
+        def utest_url = 'target/surefire-reports/**/*.xml'
     }
     stages{
         stage('Git Checkout'){
@@ -41,7 +42,7 @@ pipeline {
             }
             post {
                 success {
-                        junit 'target/surefire-reports/**/*.xml'
+                        junit "$utest_url"
                         jacoco()
                     }
             }
