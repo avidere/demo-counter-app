@@ -38,11 +38,6 @@ pipeline {
                     sh "${env.mvntest}"
                     echo "Unit Testing Completed"
                 }
-                post {
-                    always {
-                        junit allowEmptyResults: true, testResults: '/target/surefire-reports/*.xml'
-                    }
-                }
             }
         }
     /*
