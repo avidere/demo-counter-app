@@ -4,8 +4,8 @@ pipeline {
         def git_branch = 'main'
         def git_url = 'https://github.com/avidere/demo-counter-app.git'
 
-        def mvntest = 'mvn test site'
-        def mvnpackage = 'mvn clean compile'
+        def mvntest = 'mvn test '
+        def mvnpackage = 'mvn clean install'
 
         def sonar_cred = 'sonar'
         def code_analysis = 'mvn clean package sonar:sonar'
