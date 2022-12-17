@@ -10,12 +10,11 @@
 	</parent>
 	<groupId>com.example</groupId>
 	<artifactId>springboot</artifactId>
-	<version>1.1.4</version>
+	<version>1.0.0</version>
 	<name>springboot</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
 		<java.version>11</java.version>
-		<jacoco.version>0.7.5.201505241946</jacoco.version>
 	</properties>
 	<dependencies>
 		<dependency>
