@@ -66,11 +66,11 @@ pipeline {
                     }
                 }
         }
-    /*    stage('Upload Artifact to nexus repository') {
+        stage('Upload Artifact to nexus repository') {
             steps {
                 script {
                     def mavenpom = readMavenPom file: 'pom.xml'
-                    def nex_repo = 'mavenpom.version.endwith('SNAPSHOT') ? "demoproject-SNAPSHOT" : "demoproject-Release"
+                    def nex_repo = 'mavenpom.version.endwith('SNAPSHOT') ? "demoproject-snapshot" : "demoproject-Release"
                     def nex_cred = 'nexus'
                     def grp_ID = 'com.example'
                     def nex_url = '172.31.28.226:8081'
@@ -94,6 +94,6 @@ pipeline {
                     echo "Artifact uploaded to nexus repository"
                 }
             }
-        }*/
+        }
     }
 }
