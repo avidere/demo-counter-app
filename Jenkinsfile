@@ -95,6 +95,6 @@ pipeline {
                     echo "Artifact uploaded to nexus repository"
                 }
             }
-        }*/
+        }
     }
 }
