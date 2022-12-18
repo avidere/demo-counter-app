@@ -70,12 +70,13 @@ pipeline {
             steps {
                 script {
                     def mavenpom = readMavenPom file: 'pom.xml'
-                    def nex_repo = 'mavenpom.version.endwith('SNAPSHOT') ? "demoproject-snapshot" : "demoproject-Release"
+                    def nex_repo = 'mavenpom.version.endwith('SNAPSHOT') ? "demoproject-SNAPSHOT" : "demoproject-Release"
                     def nex_cred = 'nexus'
                     def grp_ID = 'com.example'
                     def nex_url = '172.31.28.226:8081'
                     def nex_ver = 'nexus3'
                     def proto = 'http'
+                    def repo   = 'demoproject'
                     nexusArtifactUploader artifacts: [
                     [
                         artifactId: 'springboot',
@@ -89,11 +90,11 @@ pipeline {
                     nexusUrl: "${nex_url}",
                     nexusVersion: "${nex_ver}",
                     protocol: "${proto}",
-                    repository: "${nex_repo}",
+                    repository: "${repo}",
                     version: "${mavenpom.version}"
                     echo "Artifact uploaded to nexus repository"
                 }
             }
-        }
+        }*/
     }
 }
