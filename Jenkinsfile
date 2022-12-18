@@ -8,7 +8,7 @@ pipeline {
         def mvnpackage = 'mvn clean install'
 
         def sonar_cred = 'sonar'
-        def code_analysis = 'mvn clean package sonar:sonar'
+        def code_analysis = 'mvn clean install sonar:sonar'
 
         def nex_cred = 'nexus'
         def grp_ID = 'com.example'
@@ -47,7 +47,6 @@ pipeline {
                     }
             }
         }
-    /*
         stage('Static code analysis') {
             steps{
                 script{
@@ -66,7 +65,7 @@ pipeline {
                         echo "Quality Gate status Completed"
                     }
                 }
-        }*/
+        }
     /*    stage('Upload Artifact to nexus repository') {
             steps {
                 script {
