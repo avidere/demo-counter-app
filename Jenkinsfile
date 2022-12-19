@@ -65,7 +65,7 @@ pipeline {
                 script {
                     /* groovylint-disable-next-line LineLength */
                     def mavenpom = readMavenPom file: 'pom.xml'
-                    def nex_repo = mavenpom.version.endsWith("SNAPSHOT") ? "demoproject-snapshot" : "demoproject-Release"
+                    def nex_repo = mavenpom.version.endsWith('SNAPSHOT') ? 'demoproject-snapshot' : 'demoproject-Release'
                     def nex_cred = 'nexus'
                     def grp_ID = 'com.example'
                     def nex_url = '172.31.28.226:8081'
