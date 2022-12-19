@@ -1,3 +1,5 @@
+/* groovylint-disable-next-line LineLength */
+/* groovylint-disable CompileStatic, DuplicateStringLiteral, NestedBlockDepth, UnusedVariable, VariableName, VariableTypeRequired */
 pipeline {
     agent any
     environment {
@@ -18,51 +20,50 @@ pipeline {
         def repo = 'demoproject'
         def utest_url = 'target/surefire-reports/**/*.xml'
     }
-    stages{
-        stage('Git Checkout'){
-            steps{
-                script{
+    stages {
+        stage('Git Checkout') {
+            steps {
+                script {
                     git branch: "${git_branch}", url: "${git_url}"
-                    echo "Git Checkout Completed"
+                    echo 'Git Checkout Completed'
                 }
             }
         }
-        stage('Maven Build'){
-            steps{
+        stage('Maven Build') {
+            steps {
                 sh "${env.mvnpackage}"
-                echo "Maven Build Completed"
+                echo 'Maven Build Completed'
             }
         }
-        stage('Unit Testing'){
-            steps{
-                script{
+        stage('Unit Testing') {
+            steps {
+                script {
                     sh "${env.mvntest}"
-                    echo "Unit Testing Completed"
+                    echo 'Unit Testing Completed'
                 }
             }
             post {
                 success {
                         junit "$utest_url"
                         jacoco()
-                    }
+                }
             }
         }
         stage('Static code analysis') {
-            steps{
-                script{
+            steps {
+                script {
                     withSonarQubeEnv(credentialsId: "${sonar_cred}") {
                         sh "${code_analysis}"
-                        echo"Static Code Analysis"
+                        echo'Static Code Analysis'
                     }
                 }
-
             }
         }
         stage('Quality Gate Status') {
-                steps{
-                    script{
+                steps {
+                    script {
                         waitForQualityGate abortPipeline: true, credentialsId: "${sonar_cred}"
-                        echo "Quality Gate status Completed"
+                        echo 'Quality Gate status Completed'
                     }
                 }
         }
@@ -70,7 +71,8 @@ pipeline {
             steps {
                 script {
                     def mavenpom = readMavenPom file: 'pom.xml'
-                    //def nex_repo = 'mavenpom.version.endsWith("SNAPSHOT") ? "demoproject-snapshot" : "demoproject-release"
+                    /* groovylint-disable-next-line LineLength */
+                    def nex_repo = mavenpom.version.endsWith("SNAPSHOT") ? "demoproject-snapshot" : "demoproject-release"
                     def nex_cred = 'nexus'
                     def grp_ID = 'com.example'
                     def nex_url = '172.31.28.226:8081'
@@ -90,11 +92,12 @@ pipeline {
                     nexusUrl: "${nex_url}",
                     nexusVersion: "${nex_ver}",
                     protocol: "${proto}",
-                    repository: "${repo}",
+                    repository: "${nex_repo}",
                     version: "${mavenpom.version}"
-                    echo "Artifact uploaded to nexus repository"
+                    echo 'Artifact uploaded to nexus repository'
                 }
             }
         }
     }
 }
+
