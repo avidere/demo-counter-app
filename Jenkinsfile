@@ -12,6 +12,7 @@ pipeline {
         def sonar_cred = 'sonar'
         def code_analysis = 'mvn clean install sonar:sonar'
 
+        def mavenpom = readMavenPom file: 'pom.xml'
         def nex_cred = 'nexus'
         def grp_ID = 'com.example'
         def nex_url = '172.31.28.226:8081'
@@ -70,7 +71,6 @@ pipeline {
         stage('Upload Artifact to nexus repository') {
             steps {
                 script {
-                    def mavenpom = readMavenPom file: 'pom.xml'
                     /* groovylint-disable-next-line LineLength */
                     def nex_repo = mavenpom.version.endsWith("SNAPSHOT") ? "demoproject-snapshot" : "demoproject-Release"
                     def nex_cred = 'nexus'
