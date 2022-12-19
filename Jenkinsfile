@@ -28,7 +28,7 @@ pipeline {
                 echo 'Maven Build Completed'
             }
         }
-        stage('Unit Testing') {
+        stage('Unit Testing and publishing reports') {
             steps {
                 script {
                     sh "${env.mvntest}"
@@ -42,23 +42,15 @@ pipeline {
                 }
             }
         }
-        stage('Static code analysis') {
+        stage('Static code analysis and Quality Gate Status') {
             steps {
                 script {
                     withSonarQubeEnv(credentialsId: "${sonar_cred}") {
                         sh "${code_analysis}"
-                        echo'Static Code Analysis'
                     }
+                    waitForQualityGate abortPipeline: true, credentialsId: "${sonar_cred}"
                 }
             }
-        }
-        stage('Quality Gate Status') {
-                steps {
-                    script {
-                        waitForQualityGate abortPipeline: true, credentialsId: "${sonar_cred}"
-                        echo 'Quality Gate status Completed'
-                    }
-                }
         }
         stage('Upload Artifact to nexus repository') {
             steps {
