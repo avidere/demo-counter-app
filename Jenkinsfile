@@ -11,14 +11,6 @@ pipeline {
 
         def sonar_cred = 'sonar'
         def code_analysis = 'mvn clean install sonar:sonar'
-
-        def mavenpom = readMavenPom file: 'pom.xml'
-        def nex_cred = 'nexus'
-        def grp_ID = 'com.example'
-        def nex_url = '172.31.28.226:8081'
-        def nex_ver = 'nexus3'
-        def proto = 'http'
-        def repo = 'demoproject'
         def utest_url = 'target/surefire-reports/**/*.xml'
     }
     stages {
@@ -72,6 +64,7 @@ pipeline {
             steps {
                 script {
                     /* groovylint-disable-next-line LineLength */
+                    def mavenpom = readMavenPom file: 'pom.xml'
                     def nex_repo = mavenpom.version.endsWith("SNAPSHOT") ? "demoproject-snapshot" : "demoproject-Release"
                     def nex_cred = 'nexus'
                     def grp_ID = 'com.example'
