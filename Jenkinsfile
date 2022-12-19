@@ -63,7 +63,6 @@ pipeline {
                     def nex_url = '172.31.28.226:8081'
                     def nex_ver = 'nexus3'
                     def proto = 'http'
-                    def repo   = 'demoproject'
                     nexusArtifactUploader artifacts: [
                     [
                         artifactId: 'springboot',
