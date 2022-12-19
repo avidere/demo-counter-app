@@ -12,8 +12,6 @@ pipeline {
         def sonar_cred = 'sonar'
         def code_analysis = 'mvn clean install sonar:sonar'
         def utest_url = 'target/surefire-reports/**/*.xml'
-
-        def mavenpom = readMavenPom file: 'pom.xml'
     }
     stages {
         stage('Git Checkout') {
@@ -58,8 +56,8 @@ pipeline {
             steps {
                 script {
                     /* groovylint-disable-next-line LineLength */
-
-                    def nex_repo = env.mavenpom.version.endsWith('SNAPSHOT') ? 'demoproject-snapshot' : 'demoproject-Release'
+                    def mavenpom = readMavenPom file: 'pom.xml'
+                    def nex_repo = mavenpom.version.endsWith('SNAPSHOT') ? 'demoproject-snapshot' : 'demoproject-Release'
                     def nex_cred = 'nexus'
                     def grp_ID = 'com.example'
                     def nex_url = '172.31.28.226:8081'
@@ -69,7 +67,7 @@ pipeline {
                     [
                         artifactId: 'springboot',
                         classifier: '',
-                        file: "target/springboot-${env.mavenpom.version}.jar",
+                        file: "target/springboot-${mavenpom.version}.jar",
                         type: 'jar'
                     ]
                 ],
@@ -79,7 +77,7 @@ pipeline {
                     nexusVersion: "${nex_ver}",
                     protocol: "${proto}",
                     repository: "${nex_repo}",
-                    version: "${env.mavenpom.version}"
+                    version: "${mavenpom.version}"
                     echo 'Artifact uploaded to nexus repository'
                 }
             }
