@@ -13,6 +13,10 @@ pipeline {
         def code_analysis = 'mvn clean install sonar:sonar'
         def utest_url = 'target/surefire-reports/**/*.xml'
         def nex_cred = 'nexus'
+        def grp_ID = 'com.example'
+        def nex_url = '172.31.28.226:8081'
+        def nex_ver = 'nexus3'
+        def proto = 'http'
     }
     stages {
         stage('Git Checkout') {
@@ -59,10 +63,6 @@ pipeline {
                     /* groovylint-disable-next-line LineLength */
                     def mavenpom = readMavenPom file: 'pom.xml'
                     def nex_repo = mavenpom.version.endsWith('SNAPSHOT') ? 'demoproject-snapshot' : 'demoproject-Release'
-                    def grp_ID = 'com.example'
-                    def nex_url = '172.31.28.226:8081'
-                    def nex_ver = 'nexus3'
-                    def proto = 'http'
                     nexusArtifactUploader artifacts: [
                     [
                         artifactId: 'springboot',
@@ -72,10 +72,10 @@ pipeline {
                     ]
                 ],
                     credentialsId: "${env.nex_cred}",
-                    groupId: "${grp_ID}",
-                    nexusUrl: "${nex_url}",
-                    nexusVersion: "${nex_ver}",
-                    protocol: "${proto}",
+                    groupId: "${env.grp_ID}",
+                    nexusUrl: "${env.nex_url}",
+                    nexusVersion: "${env.nex_ver}",
+                    protocol: "${env.proto}",
                     repository: "${nex_repo}",
                     version: "${mavenpom.version}"
                     echo 'Artifact uploaded to nexus repository'
