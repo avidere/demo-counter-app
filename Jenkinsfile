@@ -86,11 +86,11 @@ pipeline {
             steps{
                 sshagent(['ansible']) {               
     // some block
-                    sh "
+                    sh '''
                     cd /opt/artifacts/
                     wget com/example/springboot/1.2.1/springboot-1.2.1.jar
                     
-                    "
+                    '''
                 }
                   
             }
