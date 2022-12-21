@@ -82,11 +82,12 @@ pipeline {
                 }
             }
         }
-        stage('Download Artifact and Deploy on tomcat server using Ansible')
+        stage('Download Artifact and Deploy on tomcat server using Ansible'){
             steps{
 
                 echo "Hey we are here"   
             }
+        }    
     }
 }
 
