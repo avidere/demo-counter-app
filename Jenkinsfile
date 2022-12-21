@@ -86,9 +86,10 @@ pipeline {
             steps{
                 sshagent(['ansible']) {               
     // some block
-                    sh '''
-                    wget com/example/springboot/1.2.1/springboot-1.2.1.jar
+                    sh ''' 
                     
+                    echo "Hey here we are " 
+
                     '''
                 }
                   
