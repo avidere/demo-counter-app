@@ -84,8 +84,15 @@ pipeline {
         }
         stage('Download Artifact and Deploy on tomcat server using Ansible'){
             steps{
-
-                echo "Hey we are here"   
+                sshagent(['ansible']) {               
+    // some block
+                    sh "
+                    cd /opt/artifacts/
+                    wget com/example/springboot/1.2.1/springboot-1.2.1.jar
+                    
+                    "
+                }
+                  
             }
         }    
     }
