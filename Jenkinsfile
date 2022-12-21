@@ -87,7 +87,6 @@ pipeline {
                 sshagent(['ansible']) {               
     // some block
                     sh ''' 
-                    sudo su - ansadmin
                     ansible-playbook ansible.yml
                     
                     '''
