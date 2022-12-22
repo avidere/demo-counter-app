@@ -88,6 +88,7 @@ pipeline {
                     script{
                         sh '''
                         pwd
+                        ansible --version
                         ''' 
                     }
                 }
