@@ -84,13 +84,12 @@ pipeline {
         }
         stage('Download Artifact and Deploy on tomcat server using Ansible'){
             steps{
-                sshagent(['ansible']) {  
-                    script{             
-    // some block
-                    sh ''' 
-                    pwd
-                    ls -lrt   
-                    '''
+                sshagent(['ansadmin']) {
+                    script{
+                        sh'''
+                        pwd
+                        '''
+                      }
                     }
                 }
                   
