@@ -88,8 +88,8 @@ pipeline {
                     script{             
     // some block
                     sh ''' 
-                    ansible-playbook ansible.yml
-                    
+                    pwd
+                    ls -lrt   
                     '''
                     }
                 }
