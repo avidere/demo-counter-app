@@ -85,12 +85,11 @@ pipeline {
         stage('Download Artifact and Deploy on tomcat server using Ansible'){
             steps{
                 sshagent(['ansadmin']) {
-                    sh " scp -o StrictHostKeyChecking=no Jenkinsfile ansadmin@18.183.77.48:/home/asnadmin"
+
                     script{
                         sh '''
-                        pwd
-                        ansible --version
-                        ''' 
+                        ansiblePlaybook credentialsId: 'ansadmin', disableHostKeyChecking: true, installation: 'Ansible', inventory: 'inventory.yaml', playbook: 'tomact.yaml'
+                           '''      
                     }
                 }
                   
