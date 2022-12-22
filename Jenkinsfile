@@ -84,12 +84,14 @@ pipeline {
         }
         stage('Download Artifact and Deploy on tomcat server using Ansible'){
             steps{
-                sshagent(['ansible']) {               
+                sshagent(['ansible']) {  
+                    script{             
     // some block
                     sh ''' 
                     ansible-playbook ansible.yml
                     
                     '''
+                    }
                 }
                   
             }
