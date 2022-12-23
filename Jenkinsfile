@@ -88,7 +88,7 @@ pipeline {
 
                     script{
                         sh '''
-                        ansiblePlaybook credentialsId: 'ansadmin', disableHostKeyChecking: true, installation: 'Ansible', inventory: 'inventory.yaml', playbook: 'tomact.yaml'
+                        ansible-Playbook credentialsId: 'ansadmin', disableHostKeyChecking: true, installation: 'Ansible', inventory: 'inventory.yaml', playbook: 'tomact.yaml'
                            '''      
                     }
                 }
