@@ -86,10 +86,12 @@ pipeline {
             steps{
 
                  sshagent(['Ansible-server']) {
-                    sh 'pwd'
-                } 
+                    script{
+                    sh 'ansiblePlaybook credentialsId: 'Ansible-server', installation: 'Ansible', inventory: '/Ansible-integration/inventory.yaml', playbook: '/Ansible-integration/tomcat.yaml', sudo: true, sudoUser: 'devops''
+                    }
+                 }
             }
-        }    
+        }
     }
 }
 
