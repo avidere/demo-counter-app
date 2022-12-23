@@ -26,7 +26,7 @@ pipeline {
                     echo 'Git Checkout Completed'
                 }
             }
-        }
+        } /*
         stage('Maven Build') {
             steps {
                 sh "${env.mvnpackage}"
@@ -56,11 +56,11 @@ pipeline {
                     waitForQualityGate abortPipeline: true, credentialsId: "${sonar_cred}"
                 }
             }
-        }
+        } 
         stage('Upload Artifact to nexus repository') {
             steps {
                 script {
-                    /* groovylint-disable-next-line LineLength */
+                    
                     def mavenpom = readMavenPom file: 'pom.xml'
                     def nex_repo = mavenpom.version.endsWith('SNAPSHOT') ? 'demoproject-snapshot' : 'demoproject-Release'
                     nexusArtifactUploader artifacts: [
@@ -81,7 +81,7 @@ pipeline {
                     echo 'Artifact uploaded to nexus repository'
                 }
             }
-        }
+        } */
         stage('Download Artifact and Deploy on tomcat server using Ansible'){
             steps{
                 sshagent(['ansadmin']) {
