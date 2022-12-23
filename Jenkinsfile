@@ -84,15 +84,10 @@ pipeline {
         } */
         stage('Download Artifact and Deploy on tomcat server using Ansible'){
             steps{
-                sshagent(['ansadmin']) {
 
-                    ansible-Playbook become: true, becomeUser: 'ansadmin', credentialsId: 'ansible', 
-                    disableHostKeyChecking: true, installation: 'Ansible', 
-                    inventory: '/Ansible-integration/inventory.yaml', 
-                    playbook: '/Ansible-integration/tomcat.yaml', sudo: true, sudoUser: 'ansadmin'
-                    
-                }
-                  
+                 sshagent(['Ansible-server']) {
+                    sh 'pwd'
+                } 
             }
         }    
     }
