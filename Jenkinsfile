@@ -86,11 +86,10 @@ pipeline {
             steps{
                 sshagent(['ansadmin']) {
 
-                    script{
                         sh '''
                         pwd
                         ''' 
-                    }
+                    
                 }
                   
             }
