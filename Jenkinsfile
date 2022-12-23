@@ -86,9 +86,10 @@ pipeline {
             steps{
                 sshagent(['ansadmin']) {
 
-                        sh '''
-                        pwd
-                        ''' 
+                    ansiblePlaybook become: true, becomeUser: 'ansadmin', credentialsId: 'ansible', 
+                    disableHostKeyChecking: true, installation: 'Ansible', 
+                    inventory: '/Ansible-integration/inventory.yaml', 
+                    playbook: '/Ansible-integration/tomcat.yaml', sudo: true, sudoUser: 'ansadmin'
                     
                 }
                   
