@@ -26,7 +26,7 @@ pipeline {
                     echo 'Git Checkout Completed'
                 }
             }
-        } /*
+        } 
         stage('Maven Build') {
             steps {
                 sh "${env.mvnpackage}"
@@ -81,7 +81,7 @@ pipeline {
                     echo 'Artifact uploaded to nexus repository'
                 }
             }
-        } */
+        } /*
         stage('Download Artifact and Deploy on tomcat server using Ansible'){
             steps{
 
@@ -91,7 +91,7 @@ pipeline {
                     }
                  }
             }
-        }
+        } */
     }
 }
 
