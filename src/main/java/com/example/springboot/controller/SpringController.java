@@ -10,7 +10,7 @@ public class SpringController {
 
 	private transient Integer val = 0;
 	
-	@GetMapping(value = "/")
+	@GetMapping(value = "/xyz")
 	public String getValue() {
 
 //		LocalDateTime date = LocalDateTime.now();
