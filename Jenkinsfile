@@ -84,12 +84,9 @@ pipeline {
         } 
         stage('Download Artifact and Deploy on tomcat server using Ansible'){
             steps{
-
-                 sshagent(['Ansible-server']) {
                     script{
                     ansiblePlaybook credentialsId: 'jenkins', installation: 'Ansible', inventory: 'inventory', playbook: 'tomcat.yaml'
                     }
-                 }
             }
         } 
     }
