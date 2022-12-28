@@ -81,17 +81,17 @@ pipeline {
                     echo 'Artifact uploaded to nexus repository'
                 }
             }
-        } /*
+        } 
         stage('Download Artifact and Deploy on tomcat server using Ansible'){
             steps{
 
                  sshagent(['Ansible-server']) {
                     script{
-                    sh 'ansiblePlaybook credentialsId: 'Ansible-server', installation: 'Ansible', inventory: '/Ansible-integration/inventory.yaml', playbook: '/Ansible-integration/tomcat.yaml', sudo: true, sudoUser: 'devops''
+                    ansiblePlaybook credentialsId: 'jenkins', installation: 'Ansible', inventory: 'inventory', playbook: 'tomcat.yaml'
                     }
                  }
             }
-        } */
+        } 
     }
 }
 
